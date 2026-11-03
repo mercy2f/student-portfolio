@@ -55,33 +55,6 @@
     });
 
 
-    navLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("href").substring(1);
-
-            // Update active states for links
-            navLinks.forEach(l => l.classList.remove("active"));
-            link.classList.add("active");
-
-            // Update active states for sections
-            sections.forEach(sec => {
-                sec.classList.remove("active-section");
-                if (sec.id === targetId) {
-                    sec.classList.add("active-section");
-                }
-            });
-
-            // Close mobile menu if open
-            navMenu.classList.remove("show");
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    hamburger.addEventListener("click", () => {
-        navMenu.classList.toggle("show");
-    });
-
     // --- 2. Theme Switcher (Dark / Light Mode) ---
     const themeToggleBtn = document.getElementById("themeToggle");
     const htmlElement = document.documentElement;
