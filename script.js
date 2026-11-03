@@ -1,9 +1,59 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
-    // --- 1. Single-Page Navigation Switching ---
+    // --- 1. Single-Page Navigation & Button Switching ---
     const navLinks = document.querySelectorAll(".nav-links a");
+    const actionButtons = document.querySelectorAll(".hero-buttons a, a[href^='#']");
     const sections = document.querySelectorAll(".page-section");
     const hamburger = document.getElementById("hamburger");
     const navMenu = document.getElementById("navLinks");
+
+    function switchSection(targetId) {
+        // Update active states for top navbar links
+        navLinks.forEach(l => {
+            if (l.getAttribute("href") === `#${targetId}`) {
+                l.classList.add("active");
+            } else {
+                l.classList.remove("active");
+            }
+        });
+
+        // Update active states for sections
+        sections.forEach(sec => {
+            sec.classList.remove("active-section");
+            if (sec.id === targetId) {
+                sec.classList.add("active-section");
+            }
+        });
+
+        // Close mobile menu if open
+        navMenu.classList.remove("show");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Listen to clicks on navigation links
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute("href").substring(1);
+            switchSection(targetId);
+        });
+    });
+
+    // Listen to clicks on action buttons (like "View My Projects" & "Get In Touch")
+    actionButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const href = btn.getAttribute("href");
+            if (href && href.startsWith("#")) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                switchSection(targetId);
+            }
+        });
+    });
+
+    hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("show");
+    });
+
 
     navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
